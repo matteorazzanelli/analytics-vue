@@ -1,7 +1,7 @@
 <template>
   <div class="category" @click="changeMeasure">
-    <div class="category-name">{{ msg }}</div>
-    <div class="category-number">{{ num }}</div>
+    <div class="category-name">{{ kpi_name }}</div>
+    <div class="category-number">{{ kpi_value }}</div>
   </div>
 </template>
 
@@ -10,14 +10,14 @@
 export default {
   name: 'Category',
   props: {
-    msg: String,
-    num: String
+    kpi_name: String,
+    kpi_value: String
   },
   emits: ['changeGraph'],
   setup(props, context){
     const changeMeasure = () => {
-      console.log('clicked ',props.msg);
-      context.emit('changeGraph', props.msg);
+      console.log('clicked ',props.kpi_name);
+      context.emit('changeGraph', props.kpi_name);
     }
 
     return {changeMeasure}

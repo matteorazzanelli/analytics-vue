@@ -1,11 +1,11 @@
 <template>
   <div class="analyitcs">
-    <Graph msg="Main Graph"/>
+    <Graph @changeGraph="changeKpi" title='Main Graph' :graph="graph_to_show"/>
     <div class="categories">
-      <Category @changeGraph="changeKpi" msg="Subcriptions" num="1"/>
-      <Category @changeGraph="changeKpi" msg="Impressions" num="2"/>
-      <Category @changeGraph="changeKpi" msg="Clicks" num="3"/>
-      <Category @changeGraph="changeKpi" msg="Avg Time" num="4"/>
+      <div v-for="i in properties_name.length" :key="i">
+        <!-- i starts from 1, vectors from 0 -->
+        <Category :kpi_name=properties_name[i-1] :kpi_value='properties_num[i-1]'/>
+      </div>
     </div>
   </div>
 </template>
@@ -15,17 +15,31 @@
 import Graph from '@/components/Graph.vue'
 import Category from '@/components/Category.vue'
 
+import {ref} from "vue"
+
 
 export default {
   name: 'AnalyticsView',
   components: { Graph, Category },
   props: {},
   setup(props, context){
+
+    const properties_name = ref([
+      'Subscriptions', 'Impressions', 'Clicks', 'Avg Time'
+    ]);
+
+    const properties_num = ref([
+    '1', '2', '3', '4'
+    ])
+
+    const graph_to_show = ref('')
+
     const changeKpi = (kpi) => {
       console.log('Arrived ',kpi)
+      graph_to_show = kpi
     }
 
-    return {changeKpi}
+    return {changeKpi, properties_name, properties_num, graph_to_show}
   }
 }
 </script>

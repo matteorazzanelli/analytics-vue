@@ -1,6 +1,7 @@
 <template>
   <div class="main-graph">
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
+    <p>{{ graph_to_show }}</p>
   </div>
 </template>
 
@@ -8,7 +9,12 @@
 export default {
   name: 'Graph',
   props: {
-    msg: String
+    title: String,
+    graph_to_show: String
+  },
+  setup(props, context){
+
+    return {}
   }
 }
 </script>
