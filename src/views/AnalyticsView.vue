@@ -1,12 +1,7 @@
 <template>
   <div class="analyitcs">
-    <Graph @changeGraph="changeKpi" title='Main Graph' :graph="graph_to_show"/>
-    <div class="categories">
-      <div v-for="i in properties_name.length" :key="i">
-        <!-- i starts from 1, vectors from 0 -->
-        <Category :kpi_name=properties_name[i-1] :kpi_value='properties_num[i-1]'/>
-      </div>
-    </div>
+    <Graph title='Main Graph' :graph=graph_to_show />
+    <Category @changeGraph="changeKpi"/>
   </div>
 </template>
 
@@ -21,25 +16,16 @@ import {ref} from "vue"
 export default {
   name: 'AnalyticsView',
   components: { Graph, Category },
-  props: {},
-  setup(props, context){
-
-    const properties_name = ref([
-      'Subscriptions', 'Impressions', 'Clicks', 'Avg Time'
-    ]);
-
-    const properties_num = ref([
-    '1', '2', '3', '4'
-    ])
+  setup(){
 
     const graph_to_show = ref('')
 
     const changeKpi = (kpi) => {
-      console.log('Arrived ',kpi)
-      graph_to_show = kpi
+      graph_to_show.value = kpi
+      console.log('Arrived ',graph_to_show.value)
     }
 
-    return {changeKpi, properties_name, properties_num, graph_to_show}
+    return {changeKpi, graph_to_show}
   }
 }
 </script>
@@ -51,10 +37,5 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
-.categories {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-}
+
 </style>

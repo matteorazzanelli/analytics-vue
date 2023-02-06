@@ -1,20 +1,30 @@
 <template>
   <div class="main-graph">
     <h1>{{ title }}</h1>
-    <p>{{ graph_to_show }}</p>
+    <div v-if="active_stat == ''">
+      Loading...
+    </div>
+    <div v-else>
+      No data. Click on indicators
+    </div>
   </div>
 </template>
 
 <script>
+import {ref} from "vue"
+
 export default {
   name: 'Graph',
   props: {
-    title: String,
-    graph_to_show: String
+    title: {type: String, required: true},
+    graph: {type: String, required: true}
   },
   setup(props, context){
+    // vars
+    const active_stat = ref(props.graph);
+    
 
-    return {}
+    return {active_stat}
   }
 }
 </script>
