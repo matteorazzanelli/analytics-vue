@@ -1,6 +1,6 @@
 <template>
   <div class="analyitcs">
-    <Graph title='Main Graph' :graph=graph_to_show />
+    <Graph title='KPI : ' :graph="graph_to_show" :history="history"/>
     <Category @changeGraph="changeKpi"/>
   </div>
 </template>
@@ -19,13 +19,16 @@ export default {
   setup(){
 
     const graph_to_show = ref('')
+    const history = ref([])
 
-    const changeKpi = (kpi) => {
-      graph_to_show.value = kpi
-      console.log('Arrived ',graph_to_show.value)
+    const changeKpi = (kpi_history, kpi_name) => {
+      // the two keys are the history and the total
+      graph_to_show.value = kpi_name
+      history.value = kpi_history
+      console.log('Arrived ',graph_to_show.value, history.value)
     }
 
-    return {changeKpi, graph_to_show}
+    return {changeKpi, graph_to_show, history}
   }
 }
 </script>
