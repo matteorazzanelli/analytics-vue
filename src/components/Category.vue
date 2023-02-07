@@ -3,9 +3,11 @@
     <div v-if="error!=''">{{error}}</div>
     <div v-for="i in Object.keys(stats).length" :key="i">
       <!-- i starts from 1, vectors from 0 -->
-      <div class="category-slot" @click="changeMeasure">
+      <!-- link stats to the click event -->
+      <div class="category-slot" @click="changeMeasure(Object.keys(stats)[i-1])">
         <div class="category-name">{{ Object.keys(stats)[i-1] }}</div>
         <div class="category-number">{{ stats[Object.keys(stats)[i-1]].total }}</div>
+        <!-- the assumption is that 'total' should exist -->
       </div>
     </div>
   </div>
@@ -14,7 +16,6 @@
 <script>
 import getStats from '@/composables/getStats';
 import {ref} from "vue"
-
 
 export default {
   name: 'Category',
@@ -28,9 +29,9 @@ export default {
     getStats(stats, error)
 
     // if clicked emit an events to change the graph shown
-    const changeMeasure = () => {
-      console.log('clicked ',props.kpi_name);
-      context.emit('changeGraph', props.kpi_name);
+    const changeMeasure = (kpi_name) => {
+      console.log('clicked : ', kpi_name, stats.value[kpi_name].history)
+      context.emit('changeGraph', stats.value[kpi_name].history, kpi_name);
     }
 
     return {stats, error, changeMeasure}
@@ -43,7 +44,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
 }
 .category-slot{
   background-color: lightgrey;
