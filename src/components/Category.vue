@@ -15,7 +15,7 @@
 
 <script>
 import getStats from '@/composables/getStats';
-import {ref} from "vue"
+import {ref, onMounted} from "vue"
 
 export default {
   name: 'Category',
@@ -25,8 +25,10 @@ export default {
     const stats = ref('')
     const error = ref('')
 
-    // load data
-    getStats(stats, error)
+    onMounted(async () => {
+      // load data
+      await getStats(stats, error)
+    })
 
     // if clicked emit an events to change the graph shown
     const changeMeasure = (kpi_name) => {
