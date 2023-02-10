@@ -27,7 +27,7 @@ export default {
   components: {Line},
   setup(props){
     // vars
-    const active_stat = ref(props.graph);
+    const active_stat = ref('');
 
     const chartOptions = ref({
       "responsive": true
