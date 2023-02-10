@@ -24,10 +24,27 @@ export default {
 
     const stats = ref('')
     const error = ref('')
+    const loaded = ref(false)
+
+    const delay = ref(2000); // 2 seconds
 
     onMounted(async () => {
       // load data
-      await getStats(stats, error)
+      console.log('+++++++')
+      console.log(loaded.value)
+      console.log('+++++++')
+      if(!loaded.value){
+        await getStats(stats, error)
+        loaded.value = true;
+      }
+      console.log('onMounted in Category')
+      // set interval to update impression every 2 seconds
+      setInterval(() => {
+        console.log('-----------')
+        stats.value['impressions']['total'] += 5;
+        console.log(stats.value['impressions']['total'])
+        console.log('-----------')
+      }, delay.value);
     })
 
     // if clicked emit an events to change the graph shown
@@ -49,7 +66,8 @@ export default {
   flex-wrap: wrap;
 }
 .category-slot{
-  background-color: lightgrey;
+  background-color: #0faf87;
+  color: white;
   width: 200px;
   border-radius: 5px;
   padding: 5px;
@@ -62,7 +80,7 @@ export default {
   transition: background-color box shadow 0.2s;
 }
 .category-slot:hover {
-  background-color: rgb(168, 167, 167);
+  background-color: #0a7b5f;
 }
 .category-slot:active {
   box-shadow: none;
