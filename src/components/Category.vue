@@ -14,8 +14,10 @@
 </template>
 
 <script>
+
 import getStats from '@/composables/getStats';
 import {ref, onMounted} from "vue"
+import { useStatsStore } from '@/stores/StatsStore';
 
 export default {
   name: 'Category',
@@ -24,27 +26,31 @@ export default {
 
     const stats = ref('')
     const error = ref('')
-    const loaded = ref(false)
 
-    const delay = ref(2000); // 2 seconds
+    const delay = 2000; // 2 seconds
+    const statsStore = useStatsStore()
 
     onMounted(async () => {
-      // load data
-      console.log('+++++++')
-      console.log(loaded.value)
-      console.log('+++++++')
-      if(!loaded.value){
+      // load data only once and store value
+      if(!statsStore.isLoaded){
+        console.log('NO')
+        // retrieve and store values
         await getStats(stats, error)
-        loaded.value = true;
+        statsStore.setValues(stats.value)
+        statsStore.markLoaded()
+
+        // set interval to update impression every 2 seconds
+        setInterval(() => {
+          statsStore.increment('impressions', 5)
+          console.log(statsStore.getImpressions)
+        }, delay); 
       }
-      console.log('onMounted in Category')
-      // set interval to update impression every 2 seconds
-      setInterval(() => {
-        console.log('-----------')
-        stats.value['impressions']['total'] += 5;
-        console.log(stats.value['impressions']['total'])
-        console.log('-----------')
-      }, delay.value);
+
+      // load values since timer is set on statsStore
+      stats.value = statsStore.getAllStats;
+      
+      
+      
     })
 
     // if clicked emit an events to change the graph shown
