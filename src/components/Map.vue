@@ -1,12 +1,11 @@
 <template>
-  <div style="width: 600px; height: 800px" ref="mapDiv"></div>
+  <div style="width: 100%; height: 600px" ref="mapDiv"></div>
 </template>
 
 <script>
 import { Loader } from '@googlemaps/js-api-loader'
 import getMarkers from '@/composables/getMapMarkers'
 import { ref, onMounted } from 'vue'
-
 
 export default {
   name: 'Map',
@@ -18,8 +17,7 @@ export default {
       lat: 41.29246,
       lng: 12.5736108,
     })
-
-    const loader = new Loader({ apiKey: GOOGLE_MAPS_API_KEY })
+    const loader = new Loader({ apiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY })
     const mapDiv = ref(null)
     let map = ref(null)
 
