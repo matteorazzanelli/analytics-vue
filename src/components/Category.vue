@@ -28,7 +28,7 @@ export default {
     const error = ref('')
 
     const delay = 2000; // 2 seconds
-    const statsStore = useStatsStore()
+    const statsStore = useStatsStore() // init pinia store
 
     onMounted(async () => {
       // load data only once and store value
@@ -41,6 +41,7 @@ export default {
 
         // set interval to update impression every 2 seconds
         setInterval(() => {
+          // TODO: check if impression exists
           statsStore.increment('impressions', 5)
           console.log(statsStore.getImpressions)
         }, delay); 

@@ -8,7 +8,7 @@
 </template>
 
 <style>
-* {border: 1px solid blue}
+/* * {border: 1px solid blue} */
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
