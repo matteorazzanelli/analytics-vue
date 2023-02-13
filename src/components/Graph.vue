@@ -1,6 +1,6 @@
 <template>
   <div class="main-graph">
-    <h1>{{ title }} {{ active_stat }}</h1>
+    <h1 style="text-align:center">{{ title }} {{ active_stat }}</h1>
     <div v-if="active_stat == ''">
       No data. Click on indicators
     </div>

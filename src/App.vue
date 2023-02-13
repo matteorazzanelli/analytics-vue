@@ -1,5 +1,5 @@
 <template>
-  <h1>Newspaper Performance Indicators</h1>
+  <h1 style="text-align:center">Newspaper Performance Indicators</h1>
   <nav>
     <router-link :to="{name: 'analytics'}">Analytics</router-link> |
     <router-link :to="{name: 'geo'}">Geographic</router-link>
