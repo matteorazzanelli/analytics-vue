@@ -43,17 +43,22 @@ git clone git@github.com:matteorazzanelli/analytics-vue.git
 npm install
 ```
 
-3. Compiles and hot-reloads for development
+3. Add your GOOGLE API KEY to .env file
+```
+VUE_APP_GOOGLE_MAPS_API_KEY=<YOUR_KEY>
+```
+
+4. Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-4. Run json-server for upload local database
+5. Run json-server for upload local database
 ```
 npx json-server --watch data/geo_marker.json
 ```
 
-4. Go to http://localhost:8080
+6. Go to http://localhost:8080
 
 <!-- USAGE -->
 ## Usage
