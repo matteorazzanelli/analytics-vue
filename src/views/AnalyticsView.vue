@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // @ is an alias to /src
 import Graph from '@/components/Graph.vue'
 import Category from '@/components/Category.vue'
@@ -13,10 +13,10 @@ import Category from '@/components/Category.vue'
 import {ref} from "vue"
 
 
-export default {
-  name: 'AnalyticsView',
-  components: { Graph, Category },
-  setup(){
+// export default {
+  // name: 'AnalyticsView',
+  // components: { Graph, Category },
+  // setup(){
 
     const graph_to_show = ref('')
     const history = ref([])
@@ -28,9 +28,9 @@ export default {
       console.log('Arrived ',graph_to_show.value, history.value)
     }
 
-    return {changeKpi, graph_to_show, history}
-  }
-}
+    // return {changeKpi, graph_to_show, history}
+  // }
+// }
 </script>
 
 <style scoped>
