@@ -10,62 +10,57 @@
   </div>
 </template>
 
-<script>
-import {ref, onUpdated, computed} from "vue"
+<script setup>
 
+import {ref, onUpdated, computed} from "vue"
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement } from 'chart.js'
+
+// emit and props
+const props = defineProps({
+  title: {type: String, required: true},
+  graph: {type: String, required: true},
+  history: {type: Object, required: true}
+})
+
+// data
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement)
+const active_stat = ref('');
+const chartOptions = ref({"responsive": true})
 
-export default {
-  name: 'Graph',
-  props: {
-    title: {type: String, required: true},
-    graph: {type: String, required: true},
-    history: {type: Object, required: true}
-  },
-  components: {Line},
-  setup(props){
-    // vars
-    const active_stat = ref('');
+// methods
 
-    const chartOptions = ref({
-      "responsive": true
-    })
-
-    onUpdated(() => {
-      active_stat.value = props.graph
-    })
-
-    const chartData = computed(()=>{
-      // define
-      let cd = {
-        "labels": [],
-        "datasets": [{
-          label: '',
-          data: [],
-          borderWidth: 3,
-          pointBorderWidth: 6,
-          borderColor: 'rgb(52, 19, 144)',
-          tension: 0.1
-        }]
-      }
-      // fill
-      cd.datasets[0].label = props.graph
-      for(const key in props.history){
-        cd.labels.push(key)
-        cd.datasets[0].data.push(props.history[key]) 
-      }
-      return cd
-    })
-    
-
-    return {active_stat, chartOptions, chartData}
+// computed
+const chartData = computed(()=>{
+  // define
+  let cd = {
+    "labels": [],
+    "datasets": [{
+      label: '',
+      data: [],
+      borderWidth: 3,
+      pointBorderWidth: 6,
+      borderColor: 'rgb(52, 19, 144)',
+      tension: 0.1
+    }]
   }
-}
+  // fill
+  cd.datasets[0].label = props.graph
+  for(const key in props.history){
+    cd.labels.push(key)
+    cd.datasets[0].data.push(props.history[key]) 
+  }
+  return cd
+})
+
+// lifecycle hooks
+onUpdated(() => {
+  active_stat.value = props.graph
+})
+
+// setup code
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .main-graph{
   background-color: lightgray;

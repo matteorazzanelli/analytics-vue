@@ -7,14 +7,8 @@
 </template>
 
 
-<script>
+<script setup>
 import Map from '@/components/Map.vue'
-
-export default {
-  name: 'GeoView',
-  components: { Map },
-  setup(){ }
-}
 </script>
 
 <style scoped>

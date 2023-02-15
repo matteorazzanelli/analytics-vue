@@ -13,56 +13,53 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-import getStats from '@/composables/getStats';
 import {ref, onMounted} from "vue"
+import getStats from '@/composables/getStats';
 import { useStatsStore } from '@/stores/StatsStore';
 
-export default {
-  name: 'Category',
-  emits: ['changeGraph'],
-  setup(props, context){
+// emit and props
+const emit = defineEmits(['changeGraph'])
 
-    const stats = ref('')
-    const error = ref('')
+// data
+const stats = ref('')
+const error = ref('')
+const delay = 2000; // 2 seconds
+const statsStore = useStatsStore() // init pinia store
 
-    const delay = 2000; // 2 seconds
-    const statsStore = useStatsStore() // init pinia store
-
-    onMounted(async () => {
-      // load data only once and store value
-      if(!statsStore.isLoaded){
-        console.log('NO')
-        // retrieve and store values
-        await getStats(stats, error)
-        statsStore.setValues(stats.value)
-        statsStore.markLoaded()
-
-        // set interval to update impression every 2 seconds
-        setInterval(() => {
-          // TODO: check if impression exists
-          statsStore.increment('impressions', 5)
-          console.log(statsStore.getImpressions)
-        }, delay); 
-      }
-
-      // load values since timer is set on statsStore
-      stats.value = statsStore.getAllStats;
-      
-      
-      
-    })
-
-    // if clicked emit an events to change the graph shown
-    const changeMeasure = (kpi_name) => {
-      console.log('clicked : ', kpi_name, stats.value[kpi_name].history)
-      context.emit('changeGraph', stats.value[kpi_name].history, kpi_name);
-    }
-
-    return {stats, error, changeMeasure}
-  }
+// methods
+const changeMeasure = (kpi_name) => {
+  // if clicked emit an events to change the graph shown
+    console.log('clicked : ', kpi_name, stats.value[kpi_name].history)
+    emit('changeGraph', stats.value[kpi_name].history, kpi_name);
 }
+
+// computed
+
+// lifecycle hooks
+onMounted(async () => {
+  // load data only once and store value
+  if(!statsStore.isLoaded){
+    console.log('NO')
+    // retrieve and store values
+    await getStats(stats, error)
+    statsStore.setValues(stats.value)
+    // set the state as already loaded to load only once
+    statsStore.markLoaded()
+
+    // set interval to update impression every 2 seconds
+    setInterval(() => {
+      // TODO: check if impression exists
+      statsStore.increment('impressions', 5)
+      console.log(statsStore.getImpressions)
+    }, delay); 
+  }
+    // load values since timer is set on statsStore
+    stats.value = statsStore.getAllStats;
+})
+
+// setup code
 </script>
 
 <style scoped>

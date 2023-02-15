@@ -6,31 +6,28 @@
 </template>
 
 <script setup>
-// @ is an alias to /src
+
+import {ref} from "vue"
 import Graph from '@/components/Graph.vue'
 import Category from '@/components/Category.vue'
 
-import {ref} from "vue"
+// data
+const graph_to_show = ref('')
+const history = ref([])
 
+// methods
+const changeKpi = (kpi_history, kpi_name) => {
+  // the two keys are the history and the total
+  graph_to_show.value = kpi_name
+  history.value = kpi_history
+  console.log('Arrived ',graph_to_show.value, history.value)
+}
 
-// export default {
-  // name: 'AnalyticsView',
-  // components: { Graph, Category },
-  // setup(){
+// computed
 
-    const graph_to_show = ref('')
-    const history = ref([])
+// lifecycle hooks
 
-    const changeKpi = (kpi_history, kpi_name) => {
-      // the two keys are the history and the total
-      graph_to_show.value = kpi_name
-      history.value = kpi_history
-      console.log('Arrived ',graph_to_show.value, history.value)
-    }
-
-    // return {changeKpi, graph_to_show, history}
-  // }
-// }
+// setup code
 </script>
 
 <style scoped>
