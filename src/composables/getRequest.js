@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 export default async function useAxiosGet(url) {
+  // state encapsulated and managed by the composable
   const data = ref(null)
   const error = ref(null)
 
+  // reusable axios.get function
   try{
     let result = await axios.get(url)
     if(result.status != 200)
@@ -17,37 +19,6 @@ export default async function useAxiosGet(url) {
     error.value = err.message
   }
 
+  // expose managed state as return value
   return { data, error }
 }
-//////////////////////////////////////////////////////////////////
-// import axios from 'axios'
-// const getStats = async (stats, error) => {
-  
-//   try{
-//     let data = await axios.get('https://ott-fogliata.github.io/vuejs-s2i-repository/stats.json')
-//     if(data.status!=200)
-//       throw Error('No data available')
-//     stats.value = data.data
-//   }
-//   catch(err){
-//     console.log(err.message)
-//     error.value = err.message
-//   }
-// }
-// // export default getStats;
-
-// //////////////////////////////////////////////////////////////////
-// import axios from 'axios'
-// const getMarkers = async (markers, error) => {
-//   try{
-//     let data = await axios.get('http://localhost:3000/marker')
-//     if(data.status!=200)
-//       throw Error('No data available')
-//     markers.value = data.data
-//   }
-//   catch(err){
-//     console.log(err.message)
-//     error.value = err.message
-//   }
-// }
-// // export default getMarkers
