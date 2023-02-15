@@ -16,7 +16,7 @@
 <script setup>
 
 import {ref, onMounted} from "vue"
-import getStats from '@/composables/getStats';
+import useAxiosGet from '@/composables/getRequest';
 import { useStatsStore } from '@/stores/StatsStore';
 
 // emit and props
@@ -43,7 +43,9 @@ onMounted(async () => {
   if(!statsStore.isLoaded){
     console.log('NO')
     // retrieve and store values
-    await getStats(stats, error)
+    let res = await useAxiosGet('https://ott-fogliata.github.io/vuejs-s2i-repository/stats.json')
+    stats.value = res.data.value;
+    error.value = res.data.vaue;
     statsStore.setValues(stats.value)
     // set the state as already loaded to load only once
     statsStore.markLoaded()

@@ -4,7 +4,7 @@
 
 <script setup>
 import { Loader } from '@googlemaps/js-api-loader'
-import getMarkers from '@/composables/getMapMarkers'
+import useAxiosGet from '@/composables/getRequest';
 import { ref, onMounted } from 'vue'
 
 // data
@@ -20,12 +20,15 @@ let map = ref(null)
 
 // methods
 
-// compted
+// computed
 
 // lifecycle hooks
 onMounted(async () => {
   // load data
-  await getMarkers(markers, error)
+  let res = await useAxiosGet('http://localhost:3000/marker')
+  markers.value = res.data.value;
+  error.value = res.data.vaue;
+
   await loader.load()
 
   map.value = new google.maps.Map(mapDiv.value, {
