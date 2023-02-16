@@ -1,35 +1,42 @@
 import { defineStore } from "pinia";
+import { ref, computed } from "vue";
 
-export const useStatsStore = defineStore('statsStore', {
-  state: () => ({
-    stats: {},
-    loaded: false
-  }),
-  getters:{
-    isLoaded(){
-      return this.loaded;
-    },
-    getImpressions(){
-      return this.stats['impressions']['total'];
-    },
-    getAllStats(){
-      return this.stats;
-    }
-  },
-  actions: {
-    setValues(obj){
-      for (const key of Object.keys(obj)){
-        this.stats[key] = {
-          'history': obj[key]['history'],
-          'total': obj[key]['total']
-        }
+export const useStatsStore = defineStore('statsStore', () => {
+
+  // data
+  const stats = ref({});
+  const loaded = ref(false);
+
+  // methods
+  function setValues(obj){
+    for (const key of Object.keys(obj)){
+      console.log(key)
+      console.log(stats)
+      stats.value[key] = {
+        'history': obj[key]['history'],
+        'total': obj[key]['total']
       }
-    },
-    increment(kpi, value) {
-      this.stats[kpi]['total'] += value
-    },
-    markLoaded(){
-      this.loaded = true;
     }
   }
+
+  function increment(kpi, value){
+    stats.value[kpi]['total'] += value;
+  }
+
+  function markLoaded(){
+    loaded.value = true;
+  }
+  
+
+  // computed
+  const isLoaded = computed(()=>{return loaded.value;})
+  const getImpressions = computed(()=>{return stats.value['impressions']['total'];})
+  const getAllStats = computed(()=>{return stats.value;})
+
+  return {
+    stats, loaded,
+    setValues, increment, markLoaded,
+    isLoaded, getImpressions, getAllStats
+  }
+
 })
