@@ -1,7 +1,7 @@
 <template>
   <div class="main-graph">
-    <h1 style="text-align:center">{{ title }} {{ active_stat }}</h1>
-    <div v-if="active_stat == ''">
+    <h1 style="text-align:center">{{ title }} {{ activeStat }}</h1>
+    <div v-if="activeStat == ''">
       No data. Click on indicators
     </div>
     <div v-else>
@@ -25,7 +25,7 @@ const props = defineProps({
 
 // data
 ChartJS.register(Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement)
-const active_stat = ref('');
+const activeStat = ref('');
 const chartOptions = ref({"responsive": true})
 
 // methods
@@ -55,7 +55,7 @@ const chartData = computed(()=>{
 
 // lifecycle hooks
 onUpdated(() => {
-  active_stat.value = props.graph
+  activeStat.value = props.graph
 })
 
 // setup code

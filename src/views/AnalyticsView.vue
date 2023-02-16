@@ -1,6 +1,6 @@
 <template>
   <div class="analyitcs">
-    <Graph title='KPI : ' :graph="graph_to_show" :history="history"/>
+    <Graph title='KPI : ' :graph="graphToShow" :history="history"/>
     <Category @changeGraph="changeKpi"/>
   </div>
 </template>
@@ -12,15 +12,15 @@ import Graph from '@/components/Graph.vue'
 import Category from '@/components/Category.vue'
 
 // data
-const graph_to_show = ref('')
+const graphToShow = ref('')
 const history = ref([])
 
 // methods
-const changeKpi = (kpi_history, kpi_name) => {
+const changeKpi = (kpiHistory, kpiName) => {
   // the two keys are the history and the total
-  graph_to_show.value = kpi_name
-  history.value = kpi_history
-  console.log('Arrived ',graph_to_show.value, history.value)
+  graphToShow.value = kpiName
+  history.value = kpiHistory
+  console.log('Arrived ',graphToShow.value, history.value)
 }
 
 // computed

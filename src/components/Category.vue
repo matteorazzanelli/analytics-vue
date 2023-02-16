@@ -29,10 +29,10 @@ const delay = 2000; // 2 seconds
 const statsStore = useStatsStore() // init pinia store
 
 // methods
-const changeMeasure = (kpi_name) => {
+const changeMeasure = (kpiName) => {
   // if clicked emit an events to change the graph shown
-    console.log('clicked : ', kpi_name, stats.value[kpi_name].history)
-    emit('changeGraph', stats.value[kpi_name].history, kpi_name);
+    console.log('clicked : ', kpiName, stats.value[kpiName].history)
+    emit('changeGraph', stats.value[kpiName].history, kpiName);
 }
 
 // computed
