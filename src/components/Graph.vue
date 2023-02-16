@@ -12,7 +12,7 @@
 
 <script setup>
 
-import {ref, onUpdated, computed} from "vue"
+import {ref, watch, computed} from "vue"
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, CategoryScale, LinearScale, LineElement, PointElement } from 'chart.js'
 
@@ -53,10 +53,11 @@ const chartData = computed(()=>{
   return cd
 })
 
-// lifecycle hooks
-onUpdated(() => {
+watch(props, ()=>{
   activeStat.value = props.graph
 })
+
+// lifecycle hooks
 
 // setup code
 </script>
